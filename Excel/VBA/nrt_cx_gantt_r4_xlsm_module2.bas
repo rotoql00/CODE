@@ -505,7 +505,10 @@ Private Function GetAppConfigValue(ByVal wsConfig As Worksheet, ByVal keyName As
 EH:
     GetAppConfigValue = defaultValue
 
+MsgBox "WEB code Progress completion."  ' 테스트 메시지.
+
 End Function
+
 
 
 
