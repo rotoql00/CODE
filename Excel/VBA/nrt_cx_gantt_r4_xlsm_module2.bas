@@ -168,6 +168,8 @@ NEXT_ROW:
     Application.EnableEvents = prevEvents
     Application.ScreenUpdating = prevScreen
 
+    MsgBox "WEB code Progress completion.", vbInformation, "완료"  ' 테스트 메시지.
+
     Exit Sub
 
 EH:
@@ -505,9 +507,8 @@ Private Function GetAppConfigValue(ByVal wsConfig As Worksheet, ByVal keyName As
 EH:
     GetAppConfigValue = defaultValue
 
-MsgBox "WEB code Progress completion."  ' 테스트 메시지.
-
 End Function
+
 
 
 
