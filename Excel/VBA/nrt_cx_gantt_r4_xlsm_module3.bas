@@ -1,6 +1,6 @@
 Option Explicit
 
-' ★ 수정 포인트: 호스트(원본파일)의 이름을 인자로 받을 수 있도록 파라미터 추가
+' ★ 핵심 보완: 메인 파일명을 전달받을 수 있도록 HostName 인자 배치
 Public Sub Cx_Gantt_SungJun_Choi(Optional ByVal HostName As String = "")
 
     Dim wbTarget As Workbook
@@ -48,19 +48,20 @@ Public Sub Cx_Gantt_SungJun_Choi(Optional ByVal HostName As String = "")
     On Error GoTo EH
 
     '-------------------------------------------------------------------------
-    ' ★ 구조 개편: 대상 워크북 타겟팅 제어
+    ' 🔥 [근본 해결]: 매크로 위치 필터가 "모든 통합 문서"일 때 발생하는 포커스 유실 차단
     '-------------------------------------------------------------------------
     If HostName <> "" Then
-        ' 원본 파일명이 전달되었다면 해당 파일을 정확히 지정
+        ' 메인 파일에서 넘겨준 이름으로 원본 워크북 객체를 명확하게 고정합니다.
         Set wbTarget = Workbooks(HostName)
-        Set wsData = wbTarget.ActiveSheet ' 원본 파일의 현재 열려있는 시트
+        ' 임시 파일의 빈 시트가 아니라, 원본 파일의 현재 활성화된 간트차트 시트를 정조준합니다.
+        Set wsData = wbTarget.ActiveSheet
     Else
-        ' 단독 실행 등을 고려한 예외 처리
+        ' 단독 실행 등 예외 상황 방어용
         Set wbTarget = ThisWorkbook
         Set wsData = ActiveSheet
     End If
     
-    ' Config 시트는 늘 원본 파일(wbTarget)에서 가져옴 (임시 문서 에러 우회)
+    ' Config 시트 또한 임시 새 문서가 아닌 원본 파일 내부에서 정확하게 가져옵니다.
     Set wsCfg = wbTarget.Worksheets("Config")
     '-------------------------------------------------------------------------
 
