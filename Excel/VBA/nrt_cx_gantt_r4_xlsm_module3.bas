@@ -340,7 +340,7 @@ Private Function FindHeaderLastCol(ByVal ws As Worksheet, ByVal headerStartCellA
     Dim firstCell As Range
     Dim curCell As Range
     Dim lastCol As Long
-    Dim v Variant
+    Dim v As Variant
 
     Set firstCell = ws.Range(headerStartCellAddr)
     Set curCell = firstCell
