@@ -1,5 +1,6 @@
 Option Explicit
 
+' ★ 수정 포인트: 호스트(원본파일)의 이름을 인자로 받을 수 있도록 파라미터 추가
 Public Sub Cx_Gantt_SungJun_Choi(Optional ByVal HostName As String = "")
 
     Dim wbTarget As Workbook
@@ -47,17 +48,19 @@ Public Sub Cx_Gantt_SungJun_Choi(Optional ByVal HostName As String = "")
     On Error GoTo EH
 
     '-------------------------------------------------------------------------
-    ' 🔥 [오타 완벽 교정]: 매크로 위치 필터가 무엇이든 원본 파일을 정조준
+    ' ★ 구조 개편: 대상 워크북 타겟팅 제어
     '-------------------------------------------------------------------------
     If HostName <> "" Then
+        ' 원본 파일명이 전달되었다면 해당 파일을 정확히 지정
         Set wbTarget = Workbooks(HostName)
-        ' ⭕ [교정 완료] wbTarget 뒤의 쓸데없는 ActiveWorkbook을 제거했습니다.
-        Set wsData = wbTarget.ActiveSheet 
+        Set wsData = wbTarget.ActiveSheet ' 원본 파일의 현재 열려있는 시트
     Else
+        ' 단독 실행 등을 고려한 예외 처리
         Set wbTarget = ThisWorkbook
         Set wsData = ActiveSheet
     End If
     
+    ' Config 시트는 늘 원본 파일(wbTarget)에서 가져옴 (임시 문서 에러 우회)
     Set wsCfg = wbTarget.Worksheets("Config")
     '-------------------------------------------------------------------------
 
